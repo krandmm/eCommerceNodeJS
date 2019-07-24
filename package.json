@@ -1,17 +1,26 @@
 {
-  "name": "tour-of-heroes-api",
+  "name": "ecommerce-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "<br>",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "sun",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.17.2",
-    "express": "^4.15.3",
-    "mongoose": "^4.11.4"
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^4.13.19"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "Chhttps://github.com/krandmm/eCommerce-api.git"
   }
 }

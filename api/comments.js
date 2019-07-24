@@ -1,6 +1,6 @@
 var express  = require('express');
 var router   = express.Router();
-var Hero     = require('../models/hero');
+var Comment     = require('../models/comment');
 var mongoose = require('mongoose');
 
 // Index
@@ -9,81 +9,81 @@ router.get('/',
     var query = {};
     if(req.query.name) query.name = {$regex:req.query.name, $options:'i'};
 
-    Hero.find(query)
+    Comment.find(query)
     .sort({id: 1})
-    .exec(function(err, heroes){
+    .exec(function(err, comments){
       if(err) {
         res.status(500);
         res.json({success:false, message:err});
       }
       else {
-        res.json({success:true, data:heroes});
+        res.json({success:true, data:comments});
       }
     });
   }
 );
 
-// Show
+// Show Comment
 router.get('/:id',
   function(req, res, next){
-    Hero.findOne({id:req.params.id})
-    .exec(function(err, hero){
+    Comment.findOne({id:req.params.id})
+    .exec(function(err, comment){
       if(err) {
         res.status(500);
         res.json({success:false, message:err});
       }
-      else if(!hero){
-        res.json({success:false, message:"hero not found"});
+      else if(!comment){
+        res.json({success:false, message:"Date of comment not found"});
       }
       else {
-        res.json({success:true, data:hero});
+        res.json({success:true, data:comment});
       }
     });
   }
 );
 
-// Create
+// Create Comment
 router.post('/',
   function(req, res, next){
-    Hero.findOne({})
+    Comment.findOne({})
     .sort({id: -1})
-    .exec(function(err, hero){
+    .exec(function(err, comment){
       if(err) {
         res.status(500);
         return res.json({success:false, message:err});
       }
       else {
-        res.locals.lastId = hero?hero.id:0;
+        res.locals.lastId = comment?comment.id:0;
         next();
       }
     });
   },
   function(req, res, next){
-    var newHero = new Hero(req.body);
-    newHero.id = res.locals.lastId + 1;
-    newHero.save(function(err, hero){
+    var newComment = new Comment(req.body);
+    newComment.id = res.locals.lastId + 1;
+    newComment.save(function(err, comment){
       if(err) {
         res.status(500);
         res.json({success:false, message:err});
       }
       else {
-        res.json({success:true, data:hero});
+        res.json({success:true, data:comment});
       }
     });
   }
 );
 
-// Update
+// Update Comment
 router.put('/:id',
   function(req, res, next){
-    Hero.findOneAndUpdate({id:req.params.id}, req.body)
-    .exec(function(err, hero){
+    Comment.findOneAndUpdate({id:req.params.id}, req.body)
+    .exec(function(err, comment){
       if(err) {
         res.status(500);
         res.json({success:false, message:err});
       }
-      else if(!hero){
-        res.json({success:false, message:"hero not found"});
+      else if(!comment){
+        res.json({success:false, message:"Date of comment not found"});
       }
       else {
         res.json({success:true});
@@ -92,17 +92,17 @@ router.put('/:id',
   }
 );
 
-// Destroy
+// Destroy Comment
 router.delete('/:id',
   function(req, res, next){
-    Hero.findOneAndRemove({id:req.params.id})
-    .exec(function(err, hero){
+    Comment.findOneAndRemove({id:req.params.id})
+    .exec(function(err, comment){
       if(err) {
         res.status(500);
         res.json({success:false, message:err});
       }
-      else if(!hero){
-        res.json({success:false, message:"hero not found"});
+      else if(!comment){
+        res.json({success:false, message:"Date of comment not found"});
       }
       else {
         res.json({success:true});

@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 
 // Database
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGO_DB, {useMongoClient: true});
+mongoose.connect('mongodb://localhost:27017/eCommerce', {useMongoClient: true});
 var db = mongoose.connection;
 db.once('open', function () {
    console.log('DB connected!');
@@ -21,15 +21,20 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.header('Access-Control-Allow-Headers', 'content-type');
+  res.header('Access-Control-Allow-Headers', 'content-type, x-access-token');
   next();
 });
 
 // API
-app.use('/api/heroes', require('./api/heroes'));
+app.use('/api/products', require('./api/products'));
+app.use('/api/carts', require('./api/carts'));
+app.use('/api/comments', require('./api/comments'));
+app.use('/api/users', require('./api/users'));
+app.use('/api/auth', require('./api/auth'));
+
 
 // Server
-var port = 3000;
+var port = 4000;
 app.listen(port, function(){
   console.log('listening on port:' + port);
 });
